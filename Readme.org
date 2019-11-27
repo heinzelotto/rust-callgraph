@@ -6,10 +6,10 @@ Based on [[https://github.com/nrc/callgraph.rs]], updated to be compilable with 
 
 * Usage
 #+BEGIN_SRC sh
-cargo +nightly r -- fun_method.rs --sysroot /usr/local/
+cargo +nightly r -- example_code/fun_method.rs --sysroot /usr/local/
 #+END_SRC
 
-Adapt the path of the sysroot, i. e. ~/home/felix/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/~.
+Adapt the path of the sysroot, e. g. ~/home/felix/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/~.
 
 The arguments are passed to a call to rustc.
 

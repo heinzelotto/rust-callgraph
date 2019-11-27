@@ -87,7 +87,6 @@ impl<'v, 'tcx> visit::Visitor<'v> for CallgraphVisitor<'tcx> {
                                 caller: self.cur_fn,
                                 callee: def_id,
                             });
-                            // TODO store fn we're currently in
                         }
                     }
                 }
