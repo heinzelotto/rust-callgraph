@@ -18,14 +18,16 @@ The arguments are passed to a call to rustc.
 Using the rustc interface, run the compiler until after analysis stage, walk the expanded syntax tree and remember function and method definitions and resolved calls.
 
 * Features
-Current features:
+Extracts all kinds of calls:
+- function defs
+- struct associated impl methods
 - trait method declarations
+- trait method default impl
 - trait method implementations
 - statically dispatched calls
+- dynamically dispatched calls
 
 Missing features:
-- trait method default impl not registered
-- dynamically dispatched calls not registered
 - requires a nightly toolchain (this will not change since the rustc interface will not be stabilized)
 - runs a single rustc commandline, no support to build a whole cargo project
 - rudimentary debugging output, no real output
