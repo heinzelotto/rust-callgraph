@@ -1,33 +1,30 @@
 #![feature(rustc_private)]
 
-extern crate rustc;
 extern crate rustc_driver;
 extern crate rustc_interface;
-extern crate syntax;
+extern crate rustc_hir;
+extern crate rustc_middle;
+extern crate rustc_span;
 
-use rustc::hir::def_id::LOCAL_CRATE;
+use rustc_hir::def_id::LOCAL_CRATE;
 use rustc_driver::{Callbacks, Compilation};
+use rustc_interface::Queries;
 use rustc_interface::interface::{Compiler, Config};
-use syntax::visit;
+use rustc_hir::intravisit;
+use rustc_hir::intravisit::Visitor;
+use rustc_span::def_id::LocalModDefId;
 
 mod visitor;
 
 struct CallgraphCallbacks;
 
 impl Callbacks for CallgraphCallbacks {
-    fn config(&mut self, _config: &mut Config) {
-        _config.opts.debugging_opts.save_analysis = true;
-    }
 
-    fn after_analysis(&mut self, compiler: &Compiler) -> Compilation {
-        let expanded_crate = &compiler.expansion().unwrap().peek().0;
-        compiler.global_ctxt().unwrap().peek_mut().enter(|tcx| {
-            if tcx.analysis(LOCAL_CRATE).is_err() {
-                return;
-            }
+    fn after_analysis<'tcx>(&mut self, compiler: &Compiler, queries: &'tcx Queries<'tcx>) -> Compilation {
+        // let expanded_crate = &compiler.expansion().unwrap().peek().0;
+        queries.global_ctxt().unwrap().enter(|tcx| {
             let mut visitor = visitor::CallgraphVisitor::new(&tcx);
-            // This actually does the walking.
-            visit::walk_crate(&mut visitor, &expanded_crate);
+            tcx.hir().visit_all_item_likes_in_crate(&mut visitor);
 
             visitor.dump();
         });
@@ -39,7 +36,8 @@ impl Callbacks for CallgraphCallbacks {
 pub fn run(args: Vec<String>) {
     let mut calls = CallgraphCallbacks;
 
-    rustc_driver::run_compiler(&args, &mut calls, None, None).unwrap();
+    let run_compiler = rustc_driver::RunCompiler::new(&args, &mut calls);
+    run_compiler.run();
 }
 
 fn main() {
