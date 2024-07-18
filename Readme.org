@@ -2,7 +2,7 @@
 
 Computes the callgraph of rust programs.
 
-Based on [[https://github.com/nrc/callgraph.rs]], updated to be compilable with the current rustc API.
+Forked from [[https://github.com/heinzelotto/rust-callgraph]], updated to be compilable with Rustc 1.78.0.
 
 * Usage
 #+BEGIN_SRC sh
