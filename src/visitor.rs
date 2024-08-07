@@ -105,7 +105,11 @@ impl<'tcx> intravisit::Visitor<'tcx> for CallgraphVisitor<'tcx> {
 
         let hir_id = expr.hir_id;
         match expr.kind {
-            rustc_hir::ExprKind::Path(ref qpath) => {
+            rustc_hir::ExprKind::Call(
+                    rustc_hir::Expr{
+                        kind: rustc_hir::ExprKind::Path(ref qpath),
+                        ..
+                    }, _) => {
                 if let rustc_hir::QPath::Resolved(_, p) = qpath {
                     if let rustc_hir::def::Res::Def(_, def_id) = p.res {
                         self.static_calls.insert(Call {
@@ -118,7 +122,7 @@ impl<'tcx> intravisit::Visitor<'tcx> for CallgraphVisitor<'tcx> {
                         });
                     }
                 }
-            }
+            },
             rustc_hir::ExprKind::MethodCall(_, _, _, _) => {
                 let o_def_id = hir_id.owner;
                 let typeck_tables = self.tcx.typeck(o_def_id);
@@ -158,8 +162,9 @@ impl<'tcx> intravisit::Visitor<'tcx> for CallgraphVisitor<'tcx> {
                         _ => todo!()
                     };
                 }
-            }
-            _ => {}
+            },
+            None => (),
+            _ => todo!(),
         }
         // traverse
         intravisit::walk_expr(self, expr);
