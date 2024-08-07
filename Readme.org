@@ -2,7 +2,7 @@
 
 Computes the callgraph of rust programs.
 
-Forked from [[https://github.com/heinzelotto/rust-callgraph]], updated to be compilable with Rustc 1.80.0. Also works with full Cargo projects, not just standalone files.
+Forked from [[https://github.com/heinzelotto/rust-callgraph]], updated to be compilable with Rustc nightly 1.82.0. Also works with full Cargo projects, not just standalone files.
 
 * Installation
 #+BEGIN_SRC sh
