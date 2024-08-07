@@ -1,35 +1,29 @@
-trait T {
-    fn bla(&self){let g=3;}
+pub trait T {
+    fn bla(&self){let _g=3;}
 }
 
-struct S;
+pub struct S;
 
 impl S {
-    fn met(&self) {
-        let k = 44;
+    pub fn met(&self) {
+        let _k = 44;
     }
 }
 
 impl T for S {
     fn bla(&self) {
-        let i = 6;
+        let _i = 6;
     }
 }
 
-struct R;
+pub struct R;
 
 impl T for R {
-    fn bla(&self) {
-        let x = 4;
+     fn bla(&self) {
+        let _x = 4;
     }
 }
 
-fn virt(ob: &dyn T) {
+pub fn _virt(ob: &dyn T) {
     ob.bla();
-}
-
-fn main() {
-    let s = S {};
-    s.met();
-    s.bla();
 }
