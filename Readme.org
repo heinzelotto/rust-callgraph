@@ -15,7 +15,7 @@ cargo install --debug --locked --path . --force
 
 #+BEGIN_SRC sh
 cd ./example_code
-cargo slicer
+cargo callgraph
 #+END_SRC
 
 * How it works
