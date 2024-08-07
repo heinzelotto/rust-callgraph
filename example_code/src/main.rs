@@ -1,3 +1,9 @@
+mod fun_method;
+
+use fun_method::{S, T};
+
 fn main() {
-    println!("Hello, world!");
+    let s = S {};
+    s.met();
+    s.bla();
 }
