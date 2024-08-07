@@ -1,7 +1,19 @@
 [package]
-name = "rust-callgraph"
+name = "callgraph"
 version = "0.1.0"
-authors = ["heinzelotto <felix.monninger@gmail.com>"]
-edition = "2018"
+authors = ["vikramnitin9 <vikramnitin9@gmail.com>"]
+edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+cargo_metadata = "0.18.1"
+serde = { version = "1.0.204", features = ["derive"] }
+serde_json = "1.0.122"
+rustc_version = "0.4.0"
+wait-timeout = "0.2.0"
+which = "6.0.2"
+
+[[bin]]
+name = "callgraph"
+
+[[bin]]
+name = "cargo-callgraph"

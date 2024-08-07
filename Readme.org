@@ -2,16 +2,21 @@
 
 Computes the callgraph of rust programs.
 
-Forked from [[https://github.com/heinzelotto/rust-callgraph]], updated to be compilable with Rustc 1.78.0.
+Forked from [[https://github.com/heinzelotto/rust-callgraph]], updated to be compilable with Rustc 1.80.0. Also works with full Cargo projects, not just standalone files.
 
-* Usage
+* Installation
 #+BEGIN_SRC sh
-cargo +nightly r -- example_code/fun_method.rs --sysroot /usr/local/
+export RUSTFLAGS="-L $RUSTUP_HOME/toolchains/nightly-2024-08-07-x86_64-unknown-linux-gnu/lib"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$RUSTUP_HOME/toolchains/nightly-2024-08-07-x86_64-unknown-linux-gnu/lib"
+cargo install --debug --locked --path . --force
 #+END_SRC
 
-Adapt the path of the sysroot, e. g. ~/home/felix/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/~.
+* Usage
 
-The arguments are passed to a call to rustc.
+#+BEGIN_SRC sh
+cd ./example_code
+cargo slicer
+#+END_SRC
 
 * How it works
 
@@ -29,7 +34,6 @@ Extracts all kinds of calls:
 
 Missing features:
 - requires a nightly toolchain (this will not change since the rustc interface will not be stabilized)
-- runs a single rustc commandline, no support to build a whole cargo project
 - rudimentary debugging output, no real output
 
 
