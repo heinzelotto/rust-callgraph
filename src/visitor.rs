@@ -229,10 +229,13 @@ impl<'tcx> intravisit::Visitor<'tcx> for CallgraphVisitor<'tcx> {
                         // the next one filters methods that are just associated
                         // and do not belong to a struct
                         if let Some(trait_def_id) = self.tcx.trait_id_of_impl(impl_id) {
-                            self.tcx
+                            let item = self.tcx
                                 .associated_items(trait_def_id)
                                 .filter_by_name_unhygienic(ii.ident.name)
-                                .map(|item| decl_id = Some(item.def_id));
+                                .next(); // There should ideally be only one item matching the name
+                            if let Some(item) = item {
+                                decl_id = Some(item.def_id);
+                            };
                         }
                     }
                 }
