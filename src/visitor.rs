@@ -1,8 +1,6 @@
-use rustc_hir::{HirId, Node};
+use rustc_hir::HirId;
 use rustc_hir::def_id::DefId;
 use rustc_middle::ty::TyCtxt;
-use rustc_middle::hir::map::Map;
-use rustc_middle::ty::TypeckResults;
 use rustc_middle::ty::ParamEnvAnd;
 use std::collections::{HashMap, HashSet};
 use rustc_hir::intravisit;
@@ -26,15 +24,6 @@ macro_rules! push_walk_pop {
         $walk;
         $this.cur_fn = prev_fn;
     }};
-}
-
-pub fn print_span<'tcx>(tcx: TyCtxt<'tcx>, span: &Span) {
-    let source_map = tcx.sess.source_map();
-    println!(
-        "```rust\n{}\n```\n",
-        // source_map.span_to_diagnostic_string(span.clone()),
-        source_map.span_to_snippet(span.clone()).unwrap()
-    );
 }
 
 #[derive(Hash, PartialEq, Eq, Debug)]
@@ -163,7 +152,6 @@ impl<'tcx> intravisit::Visitor<'tcx> for CallgraphVisitor<'tcx> {
                     };
                 }
             },
-            None => (),
             _ => todo!(),
         }
         // traverse
