@@ -16,7 +16,7 @@ cargo install --debug --locked --path . --force
 #+BEGIN_SRC sh
 cd ./example_code
 cargo callgraph # To run on a full Cargo project
-callgraph src/fun_method.rs # To run on a single file
+callgraph src/main.rs # To run on a single file
 #+END_SRC
 
 * How it works

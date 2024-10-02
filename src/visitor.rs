@@ -152,7 +152,7 @@ impl<'tcx> intravisit::Visitor<'tcx> for CallgraphVisitor<'tcx> {
                     };
                 }
             },
-            _ => todo!(),
+            _ => {},
         }
         // traverse
         intravisit::walk_expr(self, expr);
